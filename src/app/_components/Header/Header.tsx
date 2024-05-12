@@ -34,7 +34,7 @@ const Header = () => {
       <header className="header__desktop--nav flex justify-between bg-zinc-300 p-7">
         <Logo />
         <nav>
-          <ul className="hidden gap-10 sm:flex">
+          <ul className="hidden gap-16 sm:flex">
             {menuItemsData.map((menu, index) => {
               return <MenuItems items={menu} key={index} />;
             })}
