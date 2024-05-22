@@ -17,15 +17,15 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
   dropdown,
 }: DropdownSelectProps) => {
   return (
-    <>
-      <ul className={`dropdown ${dropdown ? "block" : "hidden"}`}>
+    <div className="Nav__dropdown absolute mt-3 rounded bg-slate-500">
+      <ul className={`dropdown ${dropdown ? "block" : "hidden"}  p-3`}>
         {submenus.map((submenu: SubmenuItem, index: number) => (
-          <li key={index} className="menu-items">
+          <li key={index} className="menu-items mb-3">
             <a href={submenu.url}>{submenu.title}</a>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
