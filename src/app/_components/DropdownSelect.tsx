@@ -4,6 +4,8 @@ import React from "react";
 interface DropdownSelectProps {
   submenus: SubmenuItem[];
   dropdown: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 // Define the type for submenu items
