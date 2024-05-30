@@ -14,11 +14,15 @@ interface PrimaryButtonProps {
   onClick?: () => void; // Optional onClick prop
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ buttonText }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+  buttonText,
+  onClick,
+}) => {
   return (
     <button
       className="mb-3 rounded-xl bg-zinc-400 px-3 py-4 text-white hover:bg-zinc-300"
       type="submit"
+      onClick={onClick}
     >
       {buttonText}
     </button>
