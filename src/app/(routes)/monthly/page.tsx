@@ -1,7 +1,36 @@
-import React from "react";
+"use client";
+import { useState } from "react";
+import AddCostForm from "../../_components/AddCostForm";
+// import CostList from "../../_components/CostList";
+import PrimaryButton from "@/app/_components/PrimaryButton";
+// import DoublePieChart from "../Components/DoublePieChart/DoublePieChart";
 
-const page = () => {
-  return <div>monthly page</div>;
-};
+export default function StartPage() {
+  const [CostFormVisibility, setCostFormVisibility] = useState(false);
+  const [openButtonVisibility, setOpenButtonVisibility] = useState(true);
 
-export default page;
+  function handleOpenCostForm() {
+    setCostFormVisibility(true);
+    setOpenButtonVisibility(false);
+  }
+
+  function handleCloseCostForm() {
+    setCostFormVisibility(false);
+    setOpenButtonVisibility(true);
+  }
+
+  return (
+    <>
+      {openButtonVisibility ? (
+        <PrimaryButton buttonText="New cost" onClick={handleOpenCostForm} />
+      ) : (
+        <PrimaryButton buttonText="Close form" onClick={handleCloseCostForm} />
+      )}
+
+      {CostFormVisibility ? <AddCostForm /> : null}
+
+      {/* <CostList /> */}
+      {/* <DoublePieChart /> */}
+    </>
+  );
+}
