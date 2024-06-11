@@ -16,7 +16,7 @@ const fetchLocalStorage = () => {
 // };
 
 export const useFetchCosts = () => {
-  return useQuery("costs", fetchLocalStorage);
+  return useQuery({ queryKey: ["costs"], queryFn: fetchLocalStorage });
 
   // To switch to backend, use:
   // return useQuery('costs', fetchCostsFromBackend);
