@@ -1,20 +1,24 @@
-interface CostItem {
-  PersonCategory: string;
-  CostDescription: string;
-  Cost: number;
+interface CostItemProps {
+  cost: {
+    PersonCategory: string;
+    CostDescription: string;
+    Cost: number;
+    CostCategory: string;
+  };
+  categoryColors: { [key: string]: string };
 }
 
-export default function CostItem() {
-  const costs = JSON.parse(localStorage.getItem("costs") || "[]") as CostItem[];
-  console.log(costs);
+// display all of this months costs
+const CostItem: React.FC<CostItemProps> = ({ cost, categoryColors }) => {
+  return (
+    <li
+      className={`${categoryColors[cost.CostCategory] || "bg-gray-200"} px-5 py-3`}
+    >
+      <p>
+        {cost.PersonCategory} bought {cost.CostDescription} for {cost.Cost}
+      </p>
+    </li>
+  );
+};
 
-  const CostItems = costs
-    .reverse()
-    .map((cost, index) => (
-      <li key={index}>
-        {`${cost.PersonCategory}: ${cost.CostDescription} ${cost.Cost} SEK`}
-      </li>
-    ));
-
-  return <div>{CostItems}</div>;
-}
+export default CostItem;
