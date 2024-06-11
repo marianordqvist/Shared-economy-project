@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import AddCostForm from "../../_components/AddCostForm";
-// import CostList from "../../_components/CostList";
+import CostList from "../../_components/CostList";
 import PrimaryButton from "@/app/_components/PrimaryButton";
 // import DoublePieChart from "../Components/DoublePieChart/DoublePieChart";
 
@@ -21,16 +21,25 @@ export default function StartPage() {
 
   return (
     <>
-      {openButtonVisibility ? (
-        <PrimaryButton buttonText="New cost" onClick={handleOpenCostForm} />
-      ) : (
-        <PrimaryButton buttonText="Close form" onClick={handleCloseCostForm} />
-      )}
+      <div className="monthly-page-container p-14">
+        {/* COSTFORM SECTION */}
+        {openButtonVisibility ? (
+          <PrimaryButton buttonText="New cost" onClick={handleOpenCostForm} />
+        ) : (
+          <PrimaryButton
+            buttonText="Close form"
+            onClick={handleCloseCostForm}
+          />
+        )}
 
-      {CostFormVisibility ? <AddCostForm /> : null}
+        {CostFormVisibility ? <AddCostForm /> : null}
 
-      {/* <CostList /> */}
-      {/* <DoublePieChart /> */}
+        {/* VIEW OF PURCHASES */}
+        <section className="">
+          <CostList />
+        </section>
+        {/* <DoublePieChart /> */}
+      </div>
     </>
   );
 }
