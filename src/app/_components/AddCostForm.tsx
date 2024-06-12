@@ -134,7 +134,7 @@ export default function AddCostForm() {
 
   return (
     <>
-      <div className="form-container mb-10 rounded-lg bg-zinc-200 p-5">
+      <div className="form-container mb-10 rounded-3xl bg-zinc-100 p-5">
         {openButtonVisibility ? (
           <PrimaryButton buttonText="New cost" onClick={handleOpenCostForm} />
         ) : (

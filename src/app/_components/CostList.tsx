@@ -18,15 +18,15 @@ export default function CostList() {
 
   // each cost category will have a color
   const categoryColors = {
-    food: "bg-red-300",
-    entertainment: "bg-yellow-200",
-    home: "bg-green-200",
-    clothing: "bg-emerald-500",
-    other: "bg-cyan-300",
+    food: "bg-pink",
+    entertainment: "bg-hotpink",
+    home: "bg-green",
+    clothing: "bg-blue",
+    other: "bg-orange",
   };
 
   // let user choose type of list
-  const [listType, setListType] = useState<boolean>(true);
+  const [listType, setListType] = useState<boolean>(false);
   const toggleList = () => {
     setListType(!listType);
     console.log(listType);
@@ -37,8 +37,8 @@ export default function CostList() {
   if (data)
     return (
       <>
-        <div className="list-container bg-zinc-200 p-5">
-          <div className="list-container-top flex h-14 justify-between">
+        <div className="list-container rounded-3xl bg-zinc-100 p-5">
+          <div className="list-container-top mb-5 flex h-14 justify-between">
             <h2>This months shared purchases:</h2>
             <div className="list-container-buttons flex gap-3">
               {/* choose list type */}
@@ -50,13 +50,14 @@ export default function CostList() {
             </div>
           </div>
           <ul
-            className={`${listType ? `w-full flex-col` : `flex-row`} flex gap-3`}
+            className={`${listType ? `w-full flex-col` : `flex-row flex-wrap justify-items-center`} flex gap-3`}
           >
             {costs.map((cost, index) => (
               <CostItem
                 key={index}
                 cost={cost}
                 categoryColors={categoryColors}
+                listType={listType}
               />
             ))}
           </ul>
