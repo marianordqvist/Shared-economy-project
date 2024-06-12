@@ -1,5 +1,6 @@
 import { useForm, UseFormReturn, SubmitHandler } from "react-hook-form";
 import PrimaryButton from "./PrimaryButton";
+import { useState } from "react";
 
 export default function AddCostForm() {
   const onSubmit: SubmitHandler<CostsInput> = (data) => {
@@ -43,17 +44,33 @@ export default function AddCostForm() {
     formState: { errors },
   }: UseFormReturn<CostsInput> = useForm();
 
-  return (
-    <>
+  // Toggle visibility of AddCostForm
+  const [CostFormVisibility, setCostFormVisibility] = useState(false);
+  const [openButtonVisibility, setOpenButtonVisibility] = useState(true);
+
+  function handleOpenCostForm() {
+    setCostFormVisibility(true);
+    setOpenButtonVisibility(false);
+  }
+
+  function handleCloseCostForm() {
+    setCostFormVisibility(false);
+    setOpenButtonVisibility(true);
+  }
+
+  const Form = () => {
+    return (
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="cost-input-form flex w-1/4 flex-col gap-2 rounded-3xl bg-zinc-200 p-10"
+        className="cost-input-form m-auto flex w-2/3 flex-col gap-2 p-5 align-middle"
       >
         <h2 className="font-bold">Add a new cost</h2>
         <label className="font-bold">Who made this purchase?</label>
         <select
           className="mb-7"
-          {...register("PersonCategory", { required: "Buyer is required." })}
+          {...register("PersonCategory", {
+            required: "Buyer is required.",
+          })}
           defaultValue=""
         >
           <option value="" disabled>
@@ -71,7 +88,9 @@ export default function AddCostForm() {
 
         <select
           className="mb-7"
-          {...register("CostCategory", { required: "Category is required." })}
+          {...register("CostCategory", {
+            required: "Category is required.",
+          })}
           defaultValue=""
         >
           <option value="" disabled>
@@ -110,6 +129,23 @@ export default function AddCostForm() {
 
         <PrimaryButton buttonText="Add new cost" />
       </form>
+    );
+  };
+
+  return (
+    <>
+      <div className="form-container mb-10 rounded-lg bg-zinc-200 p-5">
+        {openButtonVisibility ? (
+          <PrimaryButton buttonText="New cost" onClick={handleOpenCostForm} />
+        ) : (
+          <PrimaryButton
+            buttonText="Close form"
+            onClick={handleCloseCostForm}
+          />
+        )}
+
+        {CostFormVisibility ? Form() : null}
+      </div>
     </>
   );
 }
