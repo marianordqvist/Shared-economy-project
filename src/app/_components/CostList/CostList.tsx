@@ -1,8 +1,6 @@
-// "use client";
-
 import CostItem from "./CostItem";
-import { useFetchCosts } from "../hooks/useFetchCosts";
-import PrimaryButton from "./PrimaryButton";
+import { useFetchCosts } from "../../hooks/useFetchCosts";
+import PrimaryButton from "../PrimaryButton";
 import { useState } from "react";
 
 interface CostInterface {
