@@ -5,7 +5,7 @@ const Logo = () => {
   return (
     <>
       <h1>
-        <Link href="/" className="logo">
+        <Link href="/" className="logo text-2xl italic">
           Klirr
         </Link>
       </h1>
