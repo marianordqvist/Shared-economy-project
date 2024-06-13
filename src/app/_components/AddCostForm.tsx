@@ -62,7 +62,7 @@ export default function AddCostForm() {
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="cost-input-form m-auto flex w-2/3 flex-col gap-2 p-5 align-middle"
+        className="cost-input-form m-auto flex w-2/3 flex-col gap-2 align-middle"
       >
         <h2 className="font-bold">Add a new cost</h2>
         <label className="font-bold">Who made this purchase?</label>
@@ -134,7 +134,7 @@ export default function AddCostForm() {
 
   return (
     <>
-      <div className="form-container mb-10 rounded-3xl bg-zinc-100 p-5">
+      <div className="form-container mb-10">
         {openButtonVisibility ? (
           <PrimaryButton buttonText="New cost" onClick={handleOpenCostForm} />
         ) : (
