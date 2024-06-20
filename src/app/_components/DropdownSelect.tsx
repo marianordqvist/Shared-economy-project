@@ -19,7 +19,7 @@ const DropdownSelect: React.FC<DropdownSelectProps> = ({
   dropdown,
 }: DropdownSelectProps) => {
   return (
-    <div className="Nav__dropdown absolute mt-3 rounded bg-slate-500">
+    <div className="base Nav-dropdown bg-pink absolute mt-3 rounded">
       <ul className={`dropdown ${dropdown ? "block" : "hidden"}  p-3`}>
         {submenus.map((submenu: SubmenuItem, index: number) => (
           <li key={index} className="menu-items mb-3">
