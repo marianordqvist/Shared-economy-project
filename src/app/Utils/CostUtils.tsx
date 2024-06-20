@@ -7,37 +7,42 @@ interface CostDataTypes {
 
 // calculate total cost
 export const calculateTotal = (data: CostDataTypes[]) => {
-  let total = 0;
+  let monthlyTotal = 0;
   const costsArray = data.map((item) => Number(item.Cost));
   costsArray.forEach((cost: number) => {
-    total += cost;
+    monthlyTotal += cost;
   });
-  return total;
+  return monthlyTotal;
 };
 
 // calculate total per person
 export const calculatePersonTotal = (data: CostDataTypes[]) => {
-  const personTotals: { [key: string]: number } = {};
-  data.forEach((cost) => {
-    if (!personTotals[cost.PersonCategory]) {
-      personTotals[cost.PersonCategory] = 0;
+  const personTotalArray: { [key: string]: number } = {};
+
+  data.forEach((costEntry) => {
+    const person = costEntry.PersonCategory;
+    const costAmount = Number(costEntry.Cost);
+
+    if (!personTotalArray[person]) {
+      personTotalArray[person] = 0;
     }
-    personTotals[cost.PersonCategory] += Number(cost.Cost);
+
+    personTotalArray[person] += Number(costAmount);
   });
-  return Object.keys(personTotals).map((person) => ({
+
+  return Object.keys(personTotalArray).map((person) => ({
     person,
-    totalCost: personTotals[person],
+    totalCost: personTotalArray[person],
   }));
 };
 
 // calculate percentage per person
-
 export const calculatePersonPercentage = (
-  total: number,
-  personTotals: { person: string; totalCost: number }[],
+  monthlyTotal: number,
+  personTotalArray: { person: string; totalCost: number }[],
 ) => {
-  return personTotals.map((personTotal) => ({
+  return personTotalArray.map((personTotal) => ({
     person: personTotal.person,
-    percentage: Math.round((personTotal.totalCost / total) * 100),
+    percentage: Math.round((personTotal.totalCost / monthlyTotal) * 100),
   }));
 };
