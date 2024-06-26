@@ -1,5 +1,5 @@
 import React from "react";
-import { useFetchCosts } from "@/app/hooks/useFetchCosts";
+import { getCosts } from "@/app/Context/costContext";
 import {
   calculateTotal,
   calculatePersonTotal,
@@ -8,7 +8,7 @@ import {
 import { useState, useEffect } from "react";
 
 const MemberStats = () => {
-  const { data, isLoading, error } = useFetchCosts();
+  const { data, isLoading, error } = getCosts();
   const [totalCost, setTotalCost] = useState<number>(0);
   const [totalCostPerPerson, setTotalCostPerPerson] = useState<
     { person: string; totalCost: number }[]

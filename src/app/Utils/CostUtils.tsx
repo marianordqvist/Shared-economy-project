@@ -1,14 +1,14 @@
 interface CostDataTypes {
   PersonCategory: string;
   CostCategory: string;
-  Cost: number;
+  cost: number;
   CostDescription: string;
 }
 
 // calculate total cost
 export const calculateTotal = (data: CostDataTypes[]) => {
   let monthlyTotal = 0;
-  const costsArray = data.map((item) => Number(item.Cost));
+  const costsArray = data.map((item) => Number(item.cost));
   costsArray.forEach((cost: number) => {
     monthlyTotal += cost;
   });
@@ -21,7 +21,7 @@ export const calculatePersonTotal = (data: CostDataTypes[]) => {
 
   data.forEach((costEntry) => {
     const person = costEntry.PersonCategory;
-    const costAmount = Number(costEntry.Cost);
+    const costAmount = Number(costEntry.cost);
 
     if (!personTotalArray[person]) {
       personTotalArray[person] = 0;

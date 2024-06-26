@@ -1,17 +1,19 @@
 import CostItem from "./CostItem";
-import { useFetchCosts } from "../../hooks/useFetchCosts";
+// import { useFetchCosts } from "../../hooks/useFetchCosts";
+import { getCosts } from "@/app/Context/costContext";
 import PrimaryButton from "../PrimaryButton";
 import { useState } from "react";
 
 interface CostInterface {
+  id: number;
   CostCategory: string;
   CostDescription: string;
   PersonCategory: string;
-  Cost: number;
+  cost: number;
 }
 
 export default function CostList() {
-  const { data, isLoading, error } = useFetchCosts();
+  const { data, isPending, isError } = getCosts();
   const costs: CostInterface[] = data as CostInterface[];
 
   // each cost category will have a color
@@ -30,8 +32,8 @@ export default function CostList() {
     console.log(listType);
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error when fetching the costs</p>;
+  if (isPending) return <p>Loading...</p>;
+  if (isError) return <p>Error when fetching costs</p>;
   if (data)
     return (
       <>

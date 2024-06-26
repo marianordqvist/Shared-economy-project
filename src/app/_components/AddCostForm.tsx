@@ -1,48 +1,63 @@
-import { useForm, UseFormReturn, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import PrimaryButton from "./PrimaryButton";
 import { useState } from "react";
+import { useCosts } from "../Context/costContext";
 
-export default function AddCostForm() {
+enum PersonCategory {
+  maria = "Maria",
+  adam = "Adam",
+}
+
+enum CostCategory {
+  default = "default",
+  food = "food",
+  entertainment = "entertainment",
+  home = "home",
+  clothing = "clothing",
+  other = "other",
+}
+
+interface CostsInput {
+  CostDescription: string;
+  CostCategory: CostCategory;
+  PersonCategory: PersonCategory;
+  Cost: number;
+}
+
+const AddCostForm: React.FC = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<CostsInput>();
+
+  const { addCost } = useCosts();
+
   const onSubmit: SubmitHandler<CostsInput> = (data) => {
-    saveToLocalStorage(data);
-    console.log(data);
+    const newCost = {
+      id: Date.now(),
+      cost: data.Cost,
+      CostDescription: data.CostDescription,
+      CostCategory: data.CostCategory,
+      PersonCategory: data.PersonCategory,
+    };
+    addCost(newCost);
     reset();
   };
 
-  const saveToLocalStorage = (data: CostsInput) => {
-    const storedData = localStorage.getItem("costs");
-    const storedCosts = storedData ? JSON.parse(storedData) : [];
-    storedCosts.push(data);
-    localStorage.setItem("costs", JSON.stringify(storedCosts));
-  };
+  // const onSubmit: SubmitHandler<CostsInput> = (data) => {
+  //   saveToLocalStorage(data);
+  //   console.log(data);
+  //   reset();
+  // };
 
-  enum PersonCategory {
-    maria = "Maria",
-    adam = "Adam",
-  }
-
-  enum CostCategory {
-    default = "default",
-    food = "food",
-    entertainment = "entertainment",
-    home = "home",
-    clothing = "clothing",
-    other = "other",
-  }
-
-  interface CostsInput {
-    CostDescription: string;
-    CostCategory: CostCategory;
-    PersonCategory: PersonCategory;
-    Cost: number;
-  }
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  }: UseFormReturn<CostsInput> = useForm();
+  // const saveToLocalStorage = (data: CostsInput) => {
+  //   const storedData = localStorage.getItem("costs");
+  //   const storedCosts = storedData ? JSON.parse(storedData) : [];
+  //   storedCosts.push(data);
+  //   localStorage.setItem("costs", JSON.stringify(storedCosts));
+  // };
 
   // Toggle visibility of AddCostForm
   const [CostFormVisibility, setCostFormVisibility] = useState(false);
@@ -148,4 +163,6 @@ export default function AddCostForm() {
       </div>
     </>
   );
-}
+};
+
+export default AddCostForm;
