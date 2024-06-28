@@ -8,7 +8,7 @@ import {
 import { useState, useEffect } from "react";
 
 const MemberStats = () => {
-  const { data, isLoading, error } = getCosts();
+  const { data, isPending, isError } = getCosts();
   const [totalCost, setTotalCost] = useState<number>(0);
   const [totalCostPerPerson, setTotalCostPerPerson] = useState<
     { person: string; totalCost: number }[]
@@ -34,8 +34,8 @@ const MemberStats = () => {
     }
   }, [data]);
 
-  if (isLoading) return <p>Loading..</p>;
-  if (error) return <p>Error</p>;
+  if (isPending) return <p>Loading..</p>;
+  if (isError) return <p>Error</p>;
 
   return (
     <>
