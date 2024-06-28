@@ -10,11 +10,17 @@ import { useContext } from "react";
 interface CostItemInterface {
   cost: CostInterface;
   categoryColors: { [key: string]: string };
+  deleteColors: { [key: string]: string };
   listType: boolean;
 }
 
 // display all of this months costs
-const CostItem = ({ cost, categoryColors, listType }: CostItemInterface) => {
+const CostItem = ({
+  cost,
+  categoryColors,
+  listType,
+  deleteColors,
+}: CostItemInterface) => {
   const { deleteCost } = useContext(CostsContext) as CostContextInterface;
 
   const handleDeleteCost = () => {
@@ -40,7 +46,7 @@ const CostItem = ({ cost, categoryColors, listType }: CostItemInterface) => {
           </div>
           <PrimaryButton
             buttonText="x"
-            className=" absolute -right-6 -top-4 min-w-fit cursor-pointer rounded bg-transparent text-xs font-extrabold hover:bg-transparent"
+            className={` hover:text-black ${deleteColors[cost.CostCategory]} text-s absolute -right-6 -top-4 min-w-fit cursor-pointer rounded bg-transparent font-extrabold hover:bg-transparent`}
             onClick={handleDeleteCost}
           />
         </div>

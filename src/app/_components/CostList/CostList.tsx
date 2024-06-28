@@ -22,6 +22,14 @@ export default function CostList() {
     other: "bg-orange",
   };
 
+  const deleteColors = {
+    entertainment: "text-darkHotpink",
+    food: "text-darkPink",
+    home: "text-darkGreen",
+    clothing: "text-darkBlue",
+    other: "text-darkOrange",
+  };
+
   // let user choose type of list
   const [listType, setListType] = useState<boolean>(false);
   const toggleList = () => {
@@ -52,6 +60,7 @@ export default function CostList() {
               key={index}
               cost={cost}
               categoryColors={categoryColors}
+              deleteColors={deleteColors}
               listType={listType}
             />
           ))}
