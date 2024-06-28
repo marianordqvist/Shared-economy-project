@@ -1,36 +1,54 @@
-interface CostItemProps {
-  cost: {
-    PersonCategory: string;
-    CostDescription: string;
-    cost: number;
-    CostCategory: string;
-  };
+import {
+  CostsContext,
+  CostInterface,
+  CostContextInterface,
+} from "@/app/Context/costContext";
+import PrimaryButton from "../PrimaryButton";
+import { useContext } from "react";
+
+// define types
+interface CostItemInterface {
+  cost: CostInterface;
   categoryColors: { [key: string]: string };
   listType: boolean;
 }
 
 // display all of this months costs
-const CostItem: React.FC<CostItemProps> = ({
-  cost,
-  categoryColors,
-  listType,
-}) => {
+const CostItem = ({ cost, categoryColors, listType }: CostItemInterface) => {
+  const { deleteCost } = useContext(CostsContext) as CostContextInterface;
+
+  const handleDeleteCost = () => {
+    deleteCost(cost.Id);
+    console.log("clicked");
+  };
+
   return (
-    <li
-      className={`${categoryColors[cost.CostCategory] || "bg-zinc-200"} ${listType ? "w-full" : "max-w-40"} pointer-events-none flex flex-col place-content-between rounded-lg px-5 py-3`}
-    >
-      <div className="upper">
-        <p className="person inline-block font-bold">{cost.PersonCategory}</p>{" "}
-        bought{" "}
-        <p className="description inline-block font-bold">
-          {cost.CostDescription}{" "}
-        </p>{" "}
-        for <div className="cost inline-block font-bold">{cost.cost}</div>
-      </div>
-      <div className="lower">
-        <p className="pt-2 text-xs italic">{cost.CostCategory}</p>
-      </div>
-    </li>
+    <>
+      <li
+        className={`${categoryColors[cost.CostCategory] || "bg-zinc-200"} ${listType ? "w-full" : "max-w-48"} flex flex-col place-content-between rounded-lg px-5 py-3`}
+      >
+        <div className="upper relative flex flex-row">
+          <div className="text">
+            <p className="person inline-block font-bold">
+              {cost.PersonCategory}
+            </p>{" "}
+            bought{" "}
+            <p className="description inline-block font-bold">
+              {cost.CostDescription}{" "}
+            </p>{" "}
+            for <div className="cost inline-block font-bold">{cost.Sek}</div>
+          </div>
+          <PrimaryButton
+            buttonText="x"
+            className=" absolute -right-6 -top-4 min-w-fit cursor-pointer rounded bg-transparent text-xs font-extrabold hover:bg-transparent"
+            onClick={handleDeleteCost}
+          />
+        </div>
+        <div className="lower">
+          <p className="pt-2 text-xs italic">{cost.CostCategory}</p>
+        </div>
+      </li>
+    </>
   );
 };
 

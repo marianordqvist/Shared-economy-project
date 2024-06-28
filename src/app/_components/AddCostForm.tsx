@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import PrimaryButton from "./PrimaryButton";
 import { useState } from "react";
-import { useCosts } from "../Context/costContext";
+import { useCosts, CostInterface } from "../Context/costContext";
 
 enum PersonCategory {
   maria = "Maria",
@@ -17,27 +17,20 @@ enum CostCategory {
   other = "other",
 }
 
-interface CostsInput {
-  CostDescription: string;
-  CostCategory: CostCategory;
-  PersonCategory: PersonCategory;
-  Cost: number;
-}
-
 const AddCostForm: React.FC = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<CostsInput>();
+  } = useForm<CostInterface>();
 
   const { addCost } = useCosts();
 
-  const onSubmit: SubmitHandler<CostsInput> = (data) => {
+  const onSubmit: SubmitHandler<CostInterface> = (data) => {
     const newCost = {
-      id: Date.now(),
-      cost: data.Cost,
+      Id: Date.now(),
+      Sek: data.Sek,
       CostDescription: data.CostDescription,
       CostCategory: data.CostCategory,
       PersonCategory: data.PersonCategory,
@@ -45,19 +38,6 @@ const AddCostForm: React.FC = () => {
     addCost(newCost);
     reset();
   };
-
-  // const onSubmit: SubmitHandler<CostsInput> = (data) => {
-  //   saveToLocalStorage(data);
-  //   console.log(data);
-  //   reset();
-  // };
-
-  // const saveToLocalStorage = (data: CostsInput) => {
-  //   const storedData = localStorage.getItem("costs");
-  //   const storedCosts = storedData ? JSON.parse(storedData) : [];
-  //   storedCosts.push(data);
-  //   localStorage.setItem("costs", JSON.stringify(storedCosts));
-  // };
 
   // Toggle visibility of AddCostForm
   const [CostFormVisibility, setCostFormVisibility] = useState(false);
@@ -125,12 +105,12 @@ const AddCostForm: React.FC = () => {
         <label className="font-bold">Cost: (in sek)</label>
         <input
           type="number"
-          {...register("Cost", { required: true, min: 1 })}
-          placeholder="Cost"
+          {...register("Sek", { required: true, min: 1 })}
+          placeholder="sek"
           className="mb-7"
         />
 
-        {errors.Cost ? (
+        {errors.Sek ? (
           <p style={{ color: "red" }}>Cost is required (min 1) </p>
         ) : null}
 

@@ -5,32 +5,32 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 // Define types
 export interface CostInterface {
-  id: number;
-  cost: number;
+  Id: number;
+  Sek: number;
   CostDescription: string;
   CostCategory: string;
   PersonCategory: string;
 }
 
-export interface CostContextProps {
+export interface CostContextInterface {
   costs: CostInterface[];
   addCost: (newCost: CostInterface) => void;
-  deleteCost: (id: number) => void;
+  deleteCost: (Id: number) => void;
 }
 
-interface CostsProviderProps {
+interface CostsProviderInterface {
   children: ReactNode;
 }
 
 // create context
-export const CostsContext = createContext<CostContextProps | undefined>(
+export const CostsContext = createContext<CostContextInterface | undefined>(
   undefined,
 );
 
 // fetch from local storage
 const fetchCosts = async (): Promise<CostInterface[]> => {
   const savedCosts = JSON.parse(
-    localStorage.getItem("costs") || "[]",
+    localStorage.getItem("storedCosts") || "[]",
   ) as CostInterface[];
   return savedCosts;
 };
@@ -39,27 +39,23 @@ const fetchCosts = async (): Promise<CostInterface[]> => {
 const addCostToStorage = async (newCost: CostInterface) => {
   const savedCosts = await fetchCosts();
   savedCosts.push(newCost);
-  localStorage.setItem("costs", JSON.stringify(savedCosts));
+  localStorage.setItem("storedCosts", JSON.stringify(savedCosts));
 };
 
 // delete a cost from local storage
-const deleteCostFromStorage = async (id: number) => {
+const deleteCostFromStorage = async (Id: number) => {
   const savedCosts = await fetchCosts();
-  const updatedCosts = savedCosts.filter((cost) => cost.id !== id);
-  localStorage.setItem("costs", JSON.stringify(updatedCosts));
+  const updatedCosts = savedCosts.filter((cost) => cost.Id !== Id);
+  localStorage.setItem("storedCosts", JSON.stringify(updatedCosts));
 };
 
 // create provider
-export function CostsProvider({ children }: CostsProviderProps) {
+export function CostsProvider({ children }: CostsProviderInterface) {
   const queryClient = useQueryClient();
 
   // fetch costs with react query
-  const {
-    data: costs,
-    isPending,
-    isError,
-  } = useQuery({
-    queryKey: ["costs"],
+  const { data: costs } = useQuery({
+    queryKey: ["storedCosts"],
     queryFn: fetchCosts,
   });
 
@@ -67,7 +63,7 @@ export function CostsProvider({ children }: CostsProviderProps) {
   const addCostMutation = useMutation({
     mutationFn: addCostToStorage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["costs"] });
+      queryClient.invalidateQueries({ queryKey: ["storedCosts"] });
     },
   });
 
@@ -75,7 +71,7 @@ export function CostsProvider({ children }: CostsProviderProps) {
   const deleteCostMutation = useMutation({
     mutationFn: deleteCostFromStorage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["costs"] });
+      queryClient.invalidateQueries({ queryKey: ["storedCosts"] });
     },
   });
 
@@ -83,8 +79,8 @@ export function CostsProvider({ children }: CostsProviderProps) {
     addCostMutation.mutate(newCost);
   };
 
-  const deleteCost = (id: number) => {
-    deleteCostMutation.mutate(id);
+  const deleteCost = (Id: number) => {
+    deleteCostMutation.mutate(Id);
   };
 
   return (
@@ -104,5 +100,5 @@ export const useCosts = () => {
 
 // fetch costs with react query
 export const getCosts = () => {
-  return useQuery({ queryKey: ["costs"], queryFn: fetchCosts });
+  return useQuery({ queryKey: ["storedCosts"], queryFn: fetchCosts });
 };

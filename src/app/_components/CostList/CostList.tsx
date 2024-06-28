@@ -1,20 +1,17 @@
 import CostItem from "./CostItem";
-// import { useFetchCosts } from "../../hooks/useFetchCosts";
-import { getCosts } from "@/app/Context/costContext";
+import {
+  getCosts,
+  CostInterface,
+  CostsContext,
+} from "@/app/Context/costContext";
 import PrimaryButton from "../PrimaryButton";
 import { useState } from "react";
 
-interface CostInterface {
-  id: number;
-  CostCategory: string;
-  CostDescription: string;
-  PersonCategory: string;
-  cost: number;
-}
-
 export default function CostList() {
   const { data, isPending, isError } = getCosts();
-  const costs: CostInterface[] = data as CostInterface[];
+  console.log(data);
+  // rename "data" to displayedCosts
+  const displayedCosts: CostInterface[] = data as CostInterface[];
 
   // each cost category will have a color
   const categoryColors = {
@@ -29,12 +26,11 @@ export default function CostList() {
   const [listType, setListType] = useState<boolean>(false);
   const toggleList = () => {
     setListType(!listType);
-    console.log(listType);
   };
 
   if (isPending) return <p>Loading...</p>;
   if (isError) return <p>Error when fetching costs</p>;
-  if (data)
+  if (displayedCosts)
     return (
       <>
         <div className="list-container-top mb-5 flex h-14 justify-between">
@@ -51,7 +47,7 @@ export default function CostList() {
         <ul
           className={`${listType ? `w-full flex-col` : `flex-row flex-wrap justify-items-center`} flex gap-3`}
         >
-          {costs.map((cost, index) => (
+          {displayedCosts.map((cost, index) => (
             <CostItem
               key={index}
               cost={cost}
