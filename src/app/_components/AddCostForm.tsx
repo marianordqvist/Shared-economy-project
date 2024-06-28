@@ -122,7 +122,10 @@ const AddCostForm: React.FC = () => {
           className="mb-7"
         />
 
-        <PrimaryButton buttonText="Add new cost" />
+        <PrimaryButton
+          buttonText="Add new cost"
+          className="text-darkGreen hover:bg-darkGreen bg-green/100 hover:text-green/100"
+        />
       </form>
     );
   };

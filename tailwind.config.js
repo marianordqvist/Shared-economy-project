@@ -15,6 +15,7 @@ module.exports = {
         lightPink: "#dcc0bb",
         green: "#B3D1CA",
         darkGreen: "#466255",
+        lightGreen: "#e6fff9",
         hotpink: "#F28482",
         darkHotpink: "#6d1918",
       },
@@ -24,5 +25,5 @@ module.exports = {
 };
 
 // function color() {
-//   <div className="bg-[#6d1918]"></div>;
+//   <div className="bg-[#e6fff9]"></div>;
 // }

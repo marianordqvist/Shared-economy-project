@@ -46,7 +46,7 @@ const CostItem = ({
           </div>
           <PrimaryButton
             buttonText="x"
-            className={` hover:text-black ${deleteColors[cost.CostCategory]} text-s absolute -right-6 -top-4 min-w-fit cursor-pointer rounded bg-transparent font-extrabold hover:bg-transparent`}
+            className={` hover:text-black/100 ${deleteColors[cost.CostCategory]} text-s absolute -right-6 -top-4 min-w-fit cursor-pointer rounded bg-transparent font-extrabold hover:bg-transparent`}
             onClick={handleDeleteCost}
           />
         </div>
