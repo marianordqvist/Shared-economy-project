@@ -23,7 +23,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${className}min-w-16 rounded-xl bg-pink px-3 py-2 text-sm text-black hover:bg-hotpink hover:text-white`}
+      className={`min-w-16 rounded-xl bg-pink px-3 py-2 text-sm text-black hover:bg-hotpink hover:text-white ${className}`}
       type="submit"
       onClick={onClick}
     >
