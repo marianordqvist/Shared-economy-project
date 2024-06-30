@@ -10,6 +10,7 @@ export interface CostInterface {
   CostDescription: string;
   CostCategory: string;
   PersonCategory: string;
+  Date: number;
 }
 
 export interface CostContextInterface {

@@ -34,6 +34,7 @@ const AddCostForm: React.FC = () => {
       CostDescription: data.CostDescription,
       CostCategory: data.CostCategory,
       PersonCategory: data.PersonCategory,
+      Date: data.Date,
     };
     addCost(newCost);
     reset();
@@ -52,6 +53,9 @@ const AddCostForm: React.FC = () => {
     setCostFormVisibility(false);
     setOpenButtonVisibility(true);
   }
+
+  // Get today's date in the format YYYY-MM-DD
+  const today = new Date().toISOString().split("T")[0];
 
   const Form = () => {
     return (
@@ -79,7 +83,7 @@ const AddCostForm: React.FC = () => {
           <p style={{ color: "red" }}>Person is required</p>
         ) : null}
 
-        <label className="font-bold">Choose a category</label>
+        <label className="font-bold">Choose a category:</label>
 
         <select
           className="mb-7"
@@ -114,7 +118,7 @@ const AddCostForm: React.FC = () => {
           <p style={{ color: "red" }}>Cost is required (min 1) </p>
         ) : null}
 
-        <label className="font-bold">Description</label>
+        <label className="font-bold">Description:</label>
 
         <input
           {...register("CostDescription", { max: 50 })}
@@ -122,9 +126,19 @@ const AddCostForm: React.FC = () => {
           className="mb-7"
         />
 
+        <label className="font-bold">Date:</label>
+        <input
+          type="Date"
+          {...register("Date", {
+            valueAsDate: true,
+          })}
+          defaultValue={today}
+          className="mb-7"
+        />
+
         <PrimaryButton
           buttonText="Add new cost"
-          className="text-darkGreen hover:bg-darkGreen bg-green/100 hover:text-green/100"
+          className="bg-green/100 text-darkGreen hover:bg-darkGreen hover:text-green/100"
         />
       </form>
     );
